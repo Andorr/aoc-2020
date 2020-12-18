@@ -7,8 +7,7 @@ import (
 )
 
 func main() {
-	input := parseInput("input.txt")
-	fmt.Println(len(input))
+	input := parseInput("lars.txt")
 
 	fmt.Printf("Part 01: %d\n", boardingPassHighestID(input))
 	fmt.Printf("Part 02: %d\n", findMissingSeatID(input))
@@ -17,6 +16,8 @@ func main() {
 func boardingPassHighestID(boardingPasses []string) int {
 
 	highestID := 0
+	bestRow := 0
+	bestCol := 0
 
 	for _, bp := range boardingPasses {
 
@@ -45,8 +46,12 @@ func boardingPassHighestID(boardingPasses []string) int {
 		id := rowStart*8 + colStart
 		if id > highestID {
 			highestID = id
+			bestRow = rowStart
+			bestCol = colStart
 		}
 	}
+
+	fmt.Printf("(%d, %d)\n", bestRow, bestCol)
 
 	return highestID
 }
@@ -89,13 +94,16 @@ func findMissingSeatID(boardingPasses []string) int {
 	}
 
 	// Find missing seat
-	for i := firstRow + 1; i < 128; i++ {
+	for i := 1 - 1; i < 128; i++ {
+		fmt.Printf("%d: ", i)
 		for j := 0; j < 7; j++ {
+			fmt.Printf("%d, ", seats[i][j])
 			if seats[i][j] == 0 {
-				fmt.Println(i, j)
-				return i*8 + j
+				//	fmt.Println(i, j)
+				// return i*8 + j
 			}
 		}
+		fmt.Println()
 	}
 
 	return -1
